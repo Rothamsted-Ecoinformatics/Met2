@@ -1,0 +1,593 @@
+/**
+ *	@fileoverview CSS for the eRA data extraction and preview prototype pages.
+ *
+ *	@version 0.2.10  [23.1.2007]
+ *	@version 0.2.12  [22.2.2007]
+ *	@version 0.2.14  [16.3.2007]
+ *	@version 0.2.15  [6.7.2007]
+ *	@version 0.2.17  [15.8.2007]
+ *	@version 0.2.18  [4.10.2007]
+ *	@version 0.6.1  [11.7.2008]	// start of protoype 6
+ *	@version 0.6.4  [21.7.2008]
+ *	@version 0.6.5  [11.9.2008]
+ *	@version 0.6.6  [19.5.2009]	// institute release version
+ */
+
+
+html {
+	margin: 0;
+	padding: 0;
+}
+body {
+	margin: 0;
+	padding: 0;
+	background-color: rgb(95%,95%,80%);
+	color: black;
+	font: 80% Verdana, Arial, Helvetica, sans-serif;
+}
+/*
+div {
+	border: 1px solid red;
+}
+*/
+
+/*  Header bar  */
+
+#header_bar {
+	margin: 0;
+	padding: 13px 0 0 150px;
+	background-image: url(../images/eraLogoTiny.jpg);
+	background-position-x: 10px;
+	background-repeat: no-repeat;
+/*	font-size: 200%; */
+	font-size: 160%;
+	font-weight: bold;
+	letter-spacing: 3px;
+}
+#header_bar_title {
+	margin-right: 40px;
+}
+#header_bar input {
+	display: inline;
+	margin-left: 10px;
+	margin-bottom: 4px;
+	background-color: #ffffcc;
+    width: 60px;
+	height: 22px;
+    font: bold 12px Arial;
+}
+
+select#server_reply {
+	display: inline;
+	margin-left: 20px;
+	margin-bottom: 4px;
+}
+input#server_delay {
+	display: inline;
+	margin-left: 10px;
+	margin-bottom: 4px;
+    width: 20px;
+	height: 15px;
+    font: normal 12px Arial;
+}
+input#server_check {
+	display: inline;
+	margin-left: 2px;
+	margin-bottom: 1px;
+	background-color: rgb(95%,95%,80%)
+}
+
+
+/*  Bounding box  */
+
+div.mainbody {
+/*	margin: 5px;
+	padding: 5px; */
+	margin: 5px 0px 5px 5px;
+	padding: 5px 0px 5px 5px;
+/*	background-color: rgb(95%,95%,80%); */
+}
+
+
+/*  Side bar for vertical tabs  */
+
+#tab_area {
+	float: left;
+	width: 140px;
+	margin: 5px 0 0 0;
+	padding: 0;
+/*	font-family: Arial, Helvetica, sans-serif; */
+}
+#tab_area ul {
+	margin: 21px 0 0 0;
+	padding: 0;
+	list-style: none;
+}
+#tab_area li {
+	margin: 0 0 8px 0;
+	padding: 0;
+}
+#tab_area li a {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+/*	border-right: 1px solid blue; */
+	margin 0;
+	padding: 5px 5px 5px 10px;
+	text-decoration: none;
+	display: block;
+	outline: none;
+	background-color: rgb(85%,85%,70%);
+	color: black;
+	font-weight: bold;
+/*	width: 88%; */
+	width: 124px;
+}
+#tab_area li a.selected {
+	border-right: 1px solid #ffffcc;
+/*	border-right: 1px solid rgb(95%,95%,80%); */
+	background-color: #ffffcc;
+/*	background-color: rgb(95%,95%,80%); */
+/*	width: 91%; */
+/*	border-right: 1px solid cyan; */
+}
+
+#tab_note {
+	margin: 15px 5px 3px 3px;
+	padding: 3px;
+	border: 1px dotted black;
+	color: gray;
+    font: bold 12px Arial;
+	text-align: center;
+}
+
+#tab_note p {
+	margin: 0;
+}
+
+#tab_note p.spacer {
+	margin-top: 5px;
+	margin-bottom: 5px;
+    font: normal 12px Arial;
+}
+
+#tab_note input {
+	display: inline;
+	margin-top: 12px;
+	margin-bottom: 5px;
+	background-color: rgb(85%,85%,70%);
+    width: 40px;
+	height: 19px;
+    font: normal 10px Arial;
+	color: DarkSlateGray;
+/*	color: #2f4f4f; */
+}
+
+
+/*  Display panel frame  */
+
+#display_panel_frame {
+	margin: 15px 0 0 140px;
+/*	padding: 0; */
+	padding: 0;
+/*	border-top: 1px solid black;
+	border-right: 1px solid black;
+	border-left: 3px solid black; */
+
+	border-top: 1px solid blue;
+	border-right: 1px solid blue;
+	border-left: 3px solid silver;
+	border-bottom: 1px solid blue;
+}
+
+
+/*  Display panel prop  */
+
+#prop {
+	width: 1px;
+	float: left;
+/*	border: 1px solid green; */
+}
+
+
+/*  Something for the prop to push down on  */
+
+#clear {
+	height: 1px;
+	clear: both;
+	overflow: hidden;
+}
+
+
+/*  Display panel  */
+
+#display_panel {
+	margin: 5px 0 0 140px;
+	padding: 20px;
+	background-color: #ffffcc;
+/*	background-color: rgb(95%,95%,80%); */
+/*	border-top: 1px solid black;
+	border-right: 1px solid black;*/
+/*	border-left: 3px solid black; */
+
+/*	border: 1px solid black; */
+	border-top: 1px solid black;
+	border-right: none;
+	border-bottom: 1px solid black;
+	border-left: 1px solid black;
+}
+#display_panel h1 {
+	font-size: 1.33em;
+	margin: 0 0 1em 0;
+	padding: 0;
+/*	border-bottom: 1px solid black; */
+}
+#display_panel h2 {
+	font-size: 1.33em;
+	margin: 0;
+	padding: 0;
+}
+
+
+/*  Display panel insert for page loading message  */
+
+#loading_message {
+	margin: 0;
+	padding: 0;
+/*	border: 1px solid blue; */
+}
+#loading_message p {
+	font-weight: bold;
+}
+
+
+/*  Display panel insert for user guide  */
+
+#user_guide {
+	margin: 0;
+	padding: 0;
+}
+
+
+/*  Display panel insert for user guide -- tab sub-panel  */
+
+#user_guide_tab_section {
+	margin-bottom: 20px;
+}
+#user_guide_tab_section ul {
+	padding: 3px 25px;
+	margin-left: 0;
+	margin-bottom: 0;
+	margin-top: 3px;
+	font: bold 12px Verdana;
+	border-bottom: 1px solid #999;
+}
+#user_guide_tab_section li {
+	list-style: none;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+#user_guide_tab_section li a {
+	text-decoration: none;
+	padding: 3px 6px;
+/*	margin-right: 6px;		???	*/
+	border: 1px solid #999;
+	border-bottom: none;
+	background: rgb(95%,95%,80%);
+/*	background: rgb(85%,85%,70%); */
+/*	background: white; */
+	color: black;
+}
+#user_guide_tab_section li a.selected {
+	background: #ffffcc;
+	border-bottom: 1px solid #ffffcc;
+}
+
+
+/*  Display panel insert for user panel  */
+
+#user_panel {
+	margin: 0;
+	padding: 0;
+}
+#user_panel p {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+}
+#user_panel p.register_note {
+	margin-top: 30px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+}
+#user_panel table {
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border-style: none;
+}
+#user_panel td {
+	border-style: none;
+	padding: 6px;
+	text-align: right;
+}
+#user_panel input.register_button {
+    margin-top: 15px;
+}
+#user_panel a {
+	color: black;
+	text-decoration: underline;
+}
+
+
+/*  Display panel insert for dataset listing  */
+
+#dataset_listing {
+	margin: 0;
+	padding: 0;
+}
+
+
+/*  Display panel insert for dataset field listing  */
+
+#datafield_listing {
+	margin: 0;
+	padding: 0;
+}
+.dataset_group_link {
+	color: black;
+	text-decoration: none;
+}
+.dataset_group_link img {
+	border: none;
+}
+/*
+input.field_listing_button {
+	margin-right: 50px;
+}
+input.howto_button {
+	position: relative;
+	left: 300px;
+}
+*/
+tr.not_displayed {
+	display: none;
+}
+
+
+/*  Display panel insert for dataset field listing -- tab sub-panel  */
+
+#datafield_listing_tab_section {
+	margin-bottom: 20px;
+/*	border-top: 1px solid red;
+	border-left: 1px solid red;
+	border-right: 1px solid red; */
+/*	border: 1px solid red; */
+}
+#datafield_listing_tab_section ul {
+	padding: 3px 25px;
+	margin-left: 0;
+	margin-bottom: 0;
+	margin-top: 3px;
+	font: bold 12px Verdana;
+	border-bottom: 1px solid #999;
+}
+#datafield_listing_tab_section li {
+	list-style: none;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+#datafield_listing_tab_section li a {
+	text-decoration: none;
+	padding: 3px 6px;
+/*	margin-right: 6px;		???	*/
+	border: 1px solid #999;
+	border-bottom: none;
+	background: rgb(95%,95%,80%);
+/*	background: rgb(85%,85%,70%); */
+/*	background: white; */
+	color: black;
+}
+#datafield_listing_tab_section li a.selected {
+	background: #ffffcc;
+	border-bottom: 1px solid #ffffcc;
+}
+
+
+/*  Display panel insert for dataset field listing -- table sub-panel  */
+
+#datafield_listing_table_section {
+/*	margin-top: 20px; */
+/*	border: 1px solid purple; */
+}
+
+
+/*  Display panel insert for dataset filter listing -- table sub-panel  */
+
+#datafilter_listing_table_section {
+/*	margin-top: 20px; */
+/*	border: 1px solid cyan; */
+}
+
+#expander_button {
+	margin: 10px 0 10px 0;
+}
+
+#expander_cell {
+	overflow: hidden;
+/*	border: 1px solid black; */
+}
+
+
+/*  Display panel insert for dataset field listing -- filters sub-panel  */
+/*
+div.field_filters_hidden {
+	display: none;
+	font-weight: bold;
+	margin: 0;
+	padding: 10px 0 10px 0;
+}
+
+div.field_filters {
+	font-weight: bold;
+	margin: 0;
+	padding: 10px 0 30px 0;
+}*/
+
+
+/*  Display panel insert for dataset extract-order display -- selection sub-panel  */
+
+#data_extract_order_section {
+/*	border: 1px solid blue; */
+}
+#data_extract_order_section table {
+	border-style: none;
+	border-collapse: collapse;
+	background-color: #ffffcc;
+/*	background: rgb(95%,95%,80%); */
+}
+#data_extract_order_section th {
+	border-style: none;
+	border-collapse: collapse;
+	background-color: #ffffcc;
+/*	background-color: rgb(85%,85%,70%); */
+}
+#data_extract_order_section td {
+	border-style: none;
+	border-collapse: collapse;
+	background-color: #ffffcc;
+/*	background-color: rgb(85%,85%,70%); */
+}
+#data_extract_order_section p {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+
+/*  Container for all page clonables  */
+/*  Ensure any content included purely for cloning is not visible  */
+/*  and adds no area to the page (so don't use visibility: hidden) */
+
+#clonables_container {
+	margin: 0;
+	padding: 0;
+	display: none;
+}
+
+
+/*	A general class used to hide any element and to ensure it	*/
+/*	adds no area to the page (so don't use visibility: hidden)	*/
+
+.hidden {
+	display: none;
+}
+
+
+/*	A general class used to hide any element but to allow it	*/
+/*	to occupy its position on the page as when it is visible	*/
+
+.not_visible {
+	visibility: hidden;
+}
+.is_visible {
+	visibility: visible;
+}
+
+
+/*  The rest  */
+
+h3, h4 {
+	font-size: 1em;
+}
+p {
+	line-height: 1.5;
+	margin: 1em 0 0 0;
+}
+input.table_check {
+	vertical-align: bottom;
+}
+input.column_help_button {
+	margin-right: 100px;
+}
+input.listing_table_button {
+	margin-right: 10px;
+}
+table {
+/*	margin-top: 20px; */
+	margin-top: 5px;
+	border-collapse: collapse;
+	border-bottom: 1px solid #999;
+}
+th, td {
+	padding: 2px;
+	border-top: 1px solid #999;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+}
+th {
+	background-color: rgb(85%,85%,70%);
+/*	font-family: Verdana, sans-serif; */
+}
+tr.footer {
+	display: none;
+}
+td.column_help_cell {
+	padding: 2px;
+	border-top: 1px solid #ffffcc;
+	border-left: 1px solid #ffffcc;
+	border-right: 1px solid #ffffcc;
+}
+tr.hidden_column_help_row {
+	display: none;
+}
+th.merge {
+	padding: 2px;
+	border-right: 1px solid rgb(85%,85%,70%);
+	border-bottom: 1px solid #999;
+}
+td.merge {
+	padding: 2px;
+	border-right: 1px solid #ffffcc;
+}
+td.merge2 {
+	padding: 2px;
+	border-top: 1px solid  #ffffcc;
+}
+td.index {
+	background-color: rgb(85%,85%,70%);
+}
+td.title {
+	padding: 2px;
+	font-weight: bold;
+	font-style: italic;
+}
+td.title img {
+	margin-right: 7px;
+}
+tr.shaded {
+	background-color: rgb(95%,95%,80%);
+}
+td.shaded {
+	background-color: rgb(95%,95%,80%);
+}
+
+table.layout {
+	border-style: none;
+	border-collapse: collapse;
+}
+table.layout th {
+	border-style: none;
+	border-collapse: collapse;
+}
+table.layout td {
+	border-style: none;
+	border-collapse: collapse;
+}
+
+
+/* -+- */
+
+

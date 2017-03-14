@@ -1,0 +1,815 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+<!--
+/**
+ *	@fileoverview A table display to prototype the architecture
+ *  and support of the eRA data extraction and preview pages.
+ *
+ *	@version 0.4.14  [23.12.2006]
+ *	@version 0.4.17  [31.1.2007]
+ *	@version 0.4.18  [2.2.2007]
+ *	@version 0.4.20  [22.2.2007]
+ *	@version 0.4.21  [26.2.2007]
+ *	@version 0.4.24  [19.3.2007]
+ *	@version 0.4.26  [16.4.2007]
+ *	@version 0.4.27  [23.4.2007]
+ *	@version 0.4.30  [2.5.2007]
+ *	@version 0.4.33  [11.7.2007]
+ *	@version 0.4.35  [26.7.2007]
+ *	@version 0.4.36  [27.7.2007]	// transfer3.js
+ *	@version 0.4.37  [31.7.2007]
+ *	@version 0.4.38  [7.8.2007]
+ *	@version 0.4.41  [16.8.2007]
+ *	@version 0.4.42  [22.8.2007]	// data_extraction_prototype_response4.js
+ *	@version 0.4.43  [24.8.2007]
+ *	@version 0.4.44  [4.10.2007]
+ *	@version 0.5.1  [9.11.2007]		// field-set definitions downloaded + message section
+ *	@version 0.5.4  [15.11.2007]
+ *	@version 0.5.5  [7.1.2008]
+ *	@version 0.5.6  [19.6.2008]
+ *	@version 0.6.1  [11.7.2008]		// start of prototype 6
+ *	@version 0.6.2  [15.7.2008]
+ *	@version 0.6.4  [18.7.2008]
+ *	@version 0.6.5  [1.8.2008]
+ *	@version 0.6.8  [21.8.2008]
+ *	@version 0.6.11  [4.9.2008]
+ *	@version 0.6.12  [10.9.2008]      // start of session remodeling to version 5 in prototype 6
+ *	@version 0.6.15  [16.9.2008]
+ *	@version 0.6.16  [6.10.2008]
+ */
+ -->
+<html>
+<head>
+<title>Datasets table interaction prototype page</title>
+<link href="../includes/data_extraction_prototype6.css"  type="text/css" rel="stylesheet">
+<script type="text/javascript" src="../includes/data_extraction_prototype_config.js"></script>
+<script type="text/javascript" src="../includes/block.js"></script>
+<script type="text/javascript" src="../includes/loadob.js"></script>
+<script type="text/javascript" src="../includes/common.js"></script>
+<script type="text/javascript" src="../includes/sha1.js"></script>
+<script type="text/javascript" src="../includes/transfer3.js"></script>
+<script type="text/javascript" src="../includes/transfer4.js"></script>
+<script type="text/javascript" src="../includes/transfer_controller.js"></script>
+<script type="text/javascript" src="../includes/timeout_manager.js"></script>
+<script type="text/javascript" src="../includes/display_config6.js"></script>
+<script type="text/javascript" src="../includes/display_factory6.js"></script>
+<script type="text/javascript" src="../includes/panel_controller.js"></script>
+<script type="text/javascript" src="../includes/panel_tabset.js"></script>
+<script type="text/javascript" src="../includes/direct_display.js"></script>
+<script type="text/javascript" src="../includes/tabbed_display.js"></script>
+<script type="text/javascript" src="../includes/session_display5.js"></script>
+<script type="text/javascript" src="../includes/dataset_table3.js"></script>
+<script type="text/javascript" src="../includes/dataset_mapper.js"></script>
+<script type="text/javascript" src="../includes/datatable_controller3.js"></script>
+<script type="text/javascript" src="../includes/datatab_display.js"></script>
+<script type="text/javascript" src="../includes/datamsg_display.js"></script>
+<script type="text/javascript" src="../includes/datafield_table2.js"></script>
+<script type="text/javascript" src="../includes/datafilter_table.js"></script>
+<script type="text/javascript" src="../includes/datafilter_mapper.js"></script>
+<script type="text/javascript" src="../includes/extract_display.js"></script>
+<script type="text/javascript" src="../includes/data_extraction_prototype_response5.js"></script>
+<script type="text/javascript" src="../includes/data_extraction_prototype6.js"></script>
+</head>
+<body>
+
+<div id="header_bar">
+
+	<span id="header_bar_title">Dataset&nbsp;browsing&nbsp;and&nbsp;extraction</span>
+	<input id="header_bar_home_link" type="button" value="Home">
+	<span id="server_test_group" class="hidden">
+	<!--<span id="server_test_group">-->
+		<select id="server_reply">
+			<option value="normal">normal</option>
+			<option value="check1">check1</option>
+			<option value="check2">check2</option>
+			<option value="delay1">delay1</option>
+			<option value="delay2">delay2</option>
+			<option value="empty1">empty1</option>
+			<option value="empty2">empty2</option>
+			<option value="error1">error1</option>
+			<option value="error2">error2</option>
+		</select>
+		<input id="server_delay" type="text" size="3" maxlength="3">
+		<input id="server_check" type="checkbox">
+	</span>
+</div>
+
+<div class="mainbody">
+
+	<div id="tab_area">
+
+		<ul id="nav_links">
+		<li class="hidden">
+			<a href="#separator">&nbsp;</a>
+		</li>
+		</ul>
+
+		<div id="tab_note" class="hidden">
+			<p>The check-boxes<br>will create new<br>dataset tabs here</p>
+			<p class="spacer">-- then --</p>
+			<p>Clicking a dataset<br>tab will display<br>its field details</p>
+			<input id="hide_tab_note" type="button" value="Hide">
+		</div>
+	</div>
+
+	<!--<div id="display_panel_frame">-->
+
+		<div id="display_panel">
+
+			<div id="prop">
+
+			</div>
+
+			<div id="loading_message">
+				<p>Loading...</p>
+			</div>
+
+			<div id="user_guide" class="hidden">
+
+				<form id="user_guide_form" method="post" action="#">
+
+				<div id="user_guide_tab_section" class="hidden">
+					<ul id="user_guide_selections">
+					<li>
+						<a href="#summary" class="selected">Summary</a>
+					</li>
+					<li>
+						<a href="#browse">Browse</a>
+					</li>
+					<li>
+						<a href="#extract">Extract</a>
+					</li>
+					<li>
+						<a href="#filter">Filter</a>
+					</li>
+					<li>
+						<a href="#retrieve">Retrieve</a>
+					</li>
+					</ul>
+					</form>
+				</div>
+
+				<div id="user_guide_summary_section" class="hidden">
+					<p><b>Browsing datasets</b><br>You can browse any/all of the listed datasets without logging in. You will see the fields, their descriptions 
+					and a summary of the data values (shown either as a numeric range or a list of all values&nbsp;&ndash;&nbsp;depending on the data type).</p>
+					<p><b>Extracting data</b><br>Also you can make multiple data extractions from any number of datasets but in this case you must first login before you can retrieve any rows of data.</p>
+					<p>&nbsp;</p>
+					<p><b>All Datasets</b> (see the tab on the left)<br>This table lists all of the datasets available on-line for browsing.</p>
+					<p><b>My Datasets</b> (see the tab on the left)<br>For convenience this table lists only the datasets you have registered for, 
+					but only after you have declared yourself by logging in. These are the only datasets you can extract data from.</p>
+					<p><b>Note:</b>&nbsp;It's easy to register. Just contact the e-RA Data Curator.</p>
+					<p>&nbsp;</p>
+					<p>This prototype uses existing classical datasets from the old e-RA system to demonstrate its operation.<br>
+					All feedback is welcome. Please send any comments to Gill Tuck (BAB) who is the e-RA Data Curator.</p>
+				</div>
+
+				<div id="user_guide_browse_section" class="hidden">
+					<p><b>You can browse any number of datasets without logging in. First choose some datasets.</b></p>
+					<p><img src="../images/all_datasets_65.gif"></p>
+					<p><b>Then, one by one, examine their fields and data ranges.</b></p>
+					<p><img src="../images/bbksoils_65.gif"></p>
+				</div>
+
+				<div id="user_guide_extract_section" class="hidden">
+					<p><b>You can make multiple extractions from any number of datasets but only after logging in.<br>
+					First select the data fields you want, then select the fields controlling the rows to be retrieved.</b></p>
+					<p><img src="../images/bbksoils2_65.gif"></p>
+					<p><b>Then either:</b></p>
+					<p><img src="../images/bbksoils3crop_65.gif"></p>
+				</div>
+
+				<div id="user_guide_filter_section" class="hidden">
+					<p><b>Limiting the output to a numeric value or numeric range (year, percentage, etc).</b></p>
+					<p><img src="../images/bbkyield2_65.gif"></p>
+					<p><b>Limiting the output to a subset of a list of values (plot, species, etc).</b></p>
+					<p><img src="../images/bbkyield1_65.gif"></p>
+				</div>
+
+				<div id="user_guide_retrieve_section" class="hidden">
+					<p><b>Finally, retrieving the data - which is output to a new browser window.<br>
+					The image below shows the invertion of row ordering from the default (plot and year) to year and plot.</b></p>
+					<p><img src="../images/bbksoils5_65.gif"></p>
+				</div>
+			</div>
+
+			<div id="user_panel" class="hidden">
+
+				<!--<form id="user_panel_form" method="post" action="?-(LOGIN-ACTION)-?">-->
+				<form id="user_panel_form" method="post" action="#">
+
+				<p>For registered eRA users</p>
+
+				<table>
+					<tr>
+					<td>eRA&nbsp;User&nbsp;Id</td>
+					<td colspan="2" style="text-align: left;"><input id="user_name" type="text" size="45" maxlength="40"></td>
+					</tr> 
+					<tr>
+					<td>Password</td> 
+					<td style="text-align: left;"><input id="pass_word" type="password" size="20" maxlength="16"></td>
+					<td>&nbsp;</td>
+					</tr> 
+					<tr>
+					<td>&nbsp;</td> 
+					<td style="text-align: left;"><input id="panel_login" type="button" value="  Login  " class="register_button"></td>
+					<!--<td style="text-align: left;"><input id="panel_login" type="submit" value="  Login  " class="register_button"></td>-->
+					<td><input id="panel_logout" type="button" value=" Logout  " class="register_button"></td> 
+					</tr> 
+				</table>
+
+				</form>
+
+				<p id="user_panel_progress">&gt;&gt;</p>
+
+				<p class="register_note"><a href="javascript:popupMsg('notimpl.html');">Click here</a> for information on registering.</p>
+
+				<!--<ul id="the_list">
+					<li>seed</li>
+					<li>status</li>
+				</ul>-->
+			</div>
+
+			<div id="dataset_listing" class="hidden">
+
+				<!--<div id="dataset_listing_table_section">-->
+					<input id="dataset_listing_column_help" type="button"
+							class="column_help_button"
+							style="background-color: rgb(95%,95%,80%);
+										width: 160px; height: 22px;
+											font: bold 12px Arial"
+							value="Explain table columns">
+							<!--value="Explain table columns">-->
+							<!--value="Hide all explanations">-->
+							<!--value="Collapse explanation">-->
+					<input id="dataset_listing_grouping" type="button"
+							class="listing_table_button"
+							style="background-color: rgb(95%,95%,80%);
+										width: 160px; height: 22px;
+											font: bold 12px Arial;"
+							value="Group by experiment">
+							<!--value="Order by dataset name">-->
+
+					<table id="dataset_listing_table">
+
+					<tr name="column_help_row" class="hidden_column_help_row">
+						<td rowspan="3" class="column_help_cell"
+							style="background: #ffffcc url(../images/angled_link3.png) no-repeat top center">
+						</td>
+						<td colspan="3" class="column_help_cell">
+							<i>Check the boxes of datasets you want to examine.
+							Then access <br>the datasets via the tabs that will appear to the left of the table.</i>
+						</td>
+					</tr>
+					<tr name="column_help_row" class="hidden_column_help_row">
+						<td rowspan="2" class="column_help_cell"
+							style="background: #ffffcc url(../images/angled_link3.png) no-repeat top center">
+						</td>
+						<td colspan="2" class="column_help_cell">
+							<i>The unique names identifying each dataset are currently the names used by <br>
+							the old e-RA system. Dataset owners will be able to specify more meaningful <br>
+							substitutes for use in this display.</i>
+						</td>
+					</tr>
+					<tr name="column_help_row" class="hidden_column_help_row">
+						<td class="column_help_cell">&nbsp;</td>
+						<td align="left" class="column_help_cell"
+							style="background: #ffffcc url(../images/angled_image3.png) no-repeat top left">
+							<i style="margin-left: 64px;">Only a short description of the dataset.</i><br><br>
+						</td>
+					</tr>
+
+					<tr name="header">
+						<th valign="middle" title="select to examine datasets"><img src="../images/tick2.png"></th>
+						<th align="center"><div style="width: 120px;">Dataset</div></th>
+						<th align="center"><div style="width: 65px;">Access</div></th>
+						<th align="center"><div style="width: 400px;">Description</div></th>
+					</tr>
+					<tr name="footer" id="dataset_listing_table_base" class="footer">
+						<td colspan="4"></td>
+					</tr>
+					</table>
+				<!--</div>-->
+			</div>
+
+			<div id="datafield_listing" class="hidden">
+
+				<!--<form id="datafield_listing_form" method="post" target="_blank" action="?-(EXTRACT-ACTION)-?">-->
+				<form id="datafield_listing_form" method="post" target="_blank" action="#">
+
+				<div id="datafield_listing_tab_section" class="hidden">
+					<ul id="datafield_listing_selections">
+					<li>
+						<a href="#fields" class="selected">Dataset Fields</a>
+					</li>
+					<li>
+						<a href="#filters">Field Search Values</a>
+					</li>
+					<li>
+						<a href="#extract">Extract Data</a>
+					</li>
+					</ul>
+				</div>
+
+				<div id="datafield_listing_message_section" class="hidden">
+					<p>&gt;&gt;&nbsp;&nbsp;<b><span id="datafield_listing_message">&nbsp;</span></b></p>
+				</div>
+
+				<div id="datafield_listing_table_section" class="hidden">
+
+					<input id="datafield_listing_column_help" type="button"
+							class="column_help_button"
+							style="background-color: rgb(95%,95%,80%);
+										width: 160px; height: 22px;
+											font: bold 12px Arial"
+							value="Explain table columns">
+							<!--value="Collapse explanation">-->
+					<input id="datafield_listing_grouping" type="button"
+							class="listing_table_button"
+							style="background-color: rgb(95%,95%,80%);
+										width: 160px; height: 22px;
+											font: bold 12px Arial;"
+							value="Group by field type">
+											<!--visibility: hidden;"-->
+							<!--value="Order by field name">-->
+
+					<table id="datafield_listing_table">
+
+					<tr name="column_help_row" class="hidden_column_help_row">
+						<td rowspan="6" class="column_help_cell"
+							style="background: #ffffcc url(../images/angled_link3.png) no-repeat top center">
+						</td>
+						<td colspan="5" class="column_help_cell">
+							<i>Check the boxes of data fields you want to extract. The boxes of index fields are <br>
+							highlighted and initially are already checked for extraction, but you can uncheck them.</i>
+							<!--<i>Check the boxes of data fields you want to extract. Initially the dataset <br>
+							index fields will already be checked for extraction but you can uncheck them.</i>-->
+						</td>
+					</tr>
+					<tr name="column_help_row" class="hidden_column_help_row">
+						<td rowspan="5" class="column_help_cell"
+							style="background: #ffffcc url(../images/angled_link3.png) no-repeat top center">
+						</td>
+						<td colspan="4" class="column_help_cell">
+							<i>Check the boxes of data fields you will specify search values for - to control/limit <br>
+							the data extracted. Then select the 'search values' tab (above) to set your search <br>
+							values. (Fields checked for search values will automatically be checked for extraction).</i>
+							<!--<i>Check the boxes of data fields you will specify search values for - to control/limit <br>
+							the data extracted. Then select the 'search values' tab to set your search values.</i>-->
+						</td>
+					</tr>
+					<tr name="column_help_row" class="hidden_column_help_row">
+						<td rowspan="4" class="column_help_cell"
+							style="background: #ffffcc url(../images/angled_link3.png) no-repeat top center">
+						</td>
+						<td colspan="3" class="column_help_cell">
+							<i>The dataset field names are currently the dataset table column names used by <br>
+							the old e-RA system. Dataset owners will be able to specify more meaningful <br>
+							substitutes for use in this display.</i>
+						</td>
+					</tr>
+					<tr name="column_help_row" class="hidden_column_help_row">
+						<td rowspan="3" class="column_help_cell"
+							style="background: #ffffcc url(../images/angled_link3.png) no-repeat top center">
+						</td>
+						<td colspan="2" class="column_help_cell">
+							<i>The field units (where applicable).</i>
+						</td>
+					</tr>
+					<tr name="column_help_row" class="hidden_column_help_row">
+						<td rowspan="2" class="column_help_cell"
+							style="background: #ffffcc url(../images/angled_link3.png) no-repeat top center">
+						</td>
+						<td class="column_help_cell">
+							<i>This header button expands/collapses table rows<br>
+							to show/hide a preview of the data held in each field.</i>
+						</td>
+					</tr>
+					<tr name="column_help_row" class="hidden_column_help_row">
+						<td align="left" class="column_help_cell"
+							style="background: #ffffcc url(../images/angled_image3.png) no-repeat top left">
+							<i style="margin-left: 64px;">Only a short description of the field.</i><br><br>
+						</td>
+					</tr>
+
+					<!--<table id="datafield_listing_table">-->
+					<tr name="header">
+						<th valign="middle" title="select to retrieve data values">
+							<img src="../images/tick2.png">
+						</th>
+						<th valign="middle" title="select to specify search/filter values">
+							<img src="../images/black_glass.png">
+						</th>
+						<th align="center"><div style="width: 120px;">Field&nbsp;Name</div></th>
+						<th align="center"><div style="width: 65px;">Units</div></th>
+						<th id="datafield_listing_table_toggle_cell" class="merge" valign="middle"
+								style="margin-left: 0; margin-right: 0;padding-left: 0; padding-right: 0;">
+							<img src="../images/plus.png">
+						</th>
+						<th align="center"><div style="width: 400px;">Description</div></th>
+					</tr>
+					<tr name="footer" id="datafield_listing_table_base" class="footer">
+						<td colspan="6"></td>
+					</tr>
+					</table>
+				</div>
+
+				<div id="datafilter_listing_table_section" class="hidden">
+
+					<input id="datafilter_listing_column_help" type="button"
+							class="column_help_button"
+							style="background-color: rgb(95%,95%,80%);
+										width: 160px; height: 22px;
+											font: bold 12px Arial"
+							value="Explain table columns">
+							<!--value="Collapse explanation">-->
+					<!--<input id="datafilter_listing_grouping" type="button"
+							class="listing_table_button"
+							style="background-color: rgb(95%,95%,80%);
+										width: 160px; height: 22px;
+											font: bold 12px Arial;
+											visibility: hidden;"
+							value="Group by field type" disabled>-->
+							<!--value="Order by field name">-->
+
+					<table id="datafilter_listing_table">
+
+					<tr name="column_help_row" class="hidden_column_help_row">
+						<td rowspan="3" class="column_help_cell"
+							style="background: #ffffcc url(../images/angled_link3.png) no-repeat top center">
+						</td>
+						<td colspan="4" class="column_help_cell">
+							<i>Click a button to select search/filter values for a field to constrain the data <br>
+							extracted. A suitable form will appear below for selecting the values. The form <br>
+							also includes the field preview as a reminder of the values/range for the field.<br>
+							Search values cannot be set for fields with either no values or only one value.</i>
+							<!--<i>Check the boxes of data fields you want to extract. The boxes of index fields are <br>
+							highlighted and initially are already checked for extraction, but you can uncheck them.</i>-->
+						</td>
+					</tr>
+					<tr name="column_help_row" class="hidden_column_help_row">
+						<td rowspan="2" class="column_help_cell"
+							style="background: #ffffcc url(../images/angled_link3.png) no-repeat top center">
+						</td>
+						<td colspan="3" class="column_help_cell">
+							<i>Your selected search/filter fields.</i>
+							<!--<i>Check the boxes of data fields you want to extract. The boxes of index fields are <br>
+							highlighted and initially are already checked for extraction, but you can uncheck them.</i>-->
+						</td>
+					</tr>
+					<tr name="column_help_row" class="hidden_column_help_row">
+						<td colspan="3" align="left" class="column_help_cell"
+							style="background: #ffffcc url(../images/angled_image3.png) no-repeat top left">
+							<i style="margin-left: 64px;">Your selected search/filter values are recorded here.</i><br><br>
+						</td>
+					</tr>
+
+					<tr name="header">
+						<th title="click button to specify search/filter values">&nbsp;</th>
+						<th align="center"><div style="width: 120px;">Field&nbsp;Name</div></th>
+						<th align="center"><div style="width: 400px;">Selected&nbsp;Search&nbsp;Values</div></th>
+						<th colspan="2">&nbsp;</th>
+					</tr>
+					<tr name="footer" id="datafilter_listing_table_base" class="footer">
+						<td colspan="5"></td>
+					</tr>
+					</table>
+					<br><br>
+				</div>
+
+				<div id="datafilter_range_value_selection_section" class="hidden">
+					<table class="layout" width="80%">
+					<tr name="header">
+						<th align="left">&nbsp;</th>
+						<th align="left" colspan="2">&nbsp;</th>
+					</tr>
+					<tr name="info_row">
+						<td>&nbsp;</td>
+						<td align="left" colspan="2"><div>&nbsp;</div></td>
+					</tr>
+					<tr>
+						<td><br><b>SPECIFY</b><br></td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="value_filter_selector" name="value_range_set" type="radio" value="value"
+							>&nbsp;<b>a&nbsp;value</b>
+						</td>
+						<td>
+							<b>field value</b><br>
+							<input id="single_value_field" type="text" size="15" style="width: 180">
+						</td>
+						<td rowspan="3" valign="top">
+							<span id="date_format_message" class="not_visible">
+							<b>date&nbsp;format&nbsp;is:&nbsp;&nbsp;DD/MM/YYYY</b></span>
+							<br><br>
+							<br><b>click&nbsp;to&nbsp;accept&nbsp;the&nbsp;value(s)</b><br>
+							<b>and&nbsp;copy&nbsp;to&nbsp;the&nbsp;table&nbsp;above</b><br>
+							<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input id="datafilter_range_accept_button" type="button" value=" accept "
+																style="width: 110px; height: 50px">
+						</td>
+					</tr>
+					<tr>
+						<td><br><b>OR</b><br></td>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="range_filter_selector" name="value_range_set" type="radio" value="range"
+							>&nbsp;<b>a&nbsp;range</b>
+						</td>
+						<td>
+							<b>start-of-range</b><br>
+							<input id="start_range_field" type="text" size="15" value="" style="width: 180">
+							<br><br><b>end-of-range</b><br>
+							<input id="end_range_field" type="text" size="15" value="" style="width: 180">
+							<br>
+						</td>
+					</tr>
+					<tr name="spacer" style="visibility: hidden;">
+						<td>MMMMMMMMMMM</td>
+						<td colspan="2">MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM</td>
+					</tr>
+					</table>
+				</div>
+
+				<div id="datafilter_list_value_selection_section" class="hidden">
+					<table class="layout" width="80%">
+					<tr name="header">
+						<th align="left">&nbsp;</th>
+						<th align="left" colspan="2">&nbsp;</th>
+					</tr>
+					<tr name="info_row">
+						<td align="left" valign="top">
+						<input id="expander_button" type="button" value="show all">
+						</td>
+						<td align="left" valign="top" colspan="2">
+						<div id="expander_cell">&nbsp;</div>
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td valign="top">
+							<br><b>select&nbsp;field&nbsp;value(s)&nbsp;--&nbsp;use&nbsp;Ctrl</b><br>
+							<b>or&nbsp;Shift&nbsp;to&nbsp;select&nbsp;multiple&nbsp;values</b><br>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<select size="5" multiple style="width: 180">
+							</select>
+							<br>&nbsp;
+						</td>
+						<td valign="top">
+							<br><b>click&nbsp;to&nbsp;accept&nbsp;the&nbsp;value(s)</b><br>
+							<b>and&nbsp;copy&nbsp;to&nbsp;the&nbsp;table&nbsp;above</b><br>
+							<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input id="datafilter_list_accept_button" type="button" value=" accept "
+																style="width: 110px; height: 50px">
+						</td>
+					</tr>
+					<tr name="spacer" style="visibility: hidden;">
+						<td>MMMMMMMMMMM</td>
+						<td colspan="2">MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM</td>
+					</tr>
+					</table>
+				</div>
+
+				<div id="data_extract_order_section" class="hidden">
+					<table>
+					<tr>
+						<td>
+						<input id="data_extract_button" type="button" value=" extract data " 
+														title="click when ready to extract data"
+														style="width: 110px; height: 50px">
+						<!--<input id="data_extract_button" type="button" value=" extract data "
+														title="click when ready to extract data"
+														style="background-color: rgb(95%,95%,80%);
+																	width: 90px; height: 50px;
+																		font: bold 12px Arial">-->
+						</td>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td style="background-color: rgb(95%,95%,80%)">
+						<b>Please read this if you are not a registered user.</b><br>
+                        The data is available for scientific research, but remains the copyright of the Lawes 
+						Agricultural Trust. The data held within e-RA is password-protected. If you are not an 
+						employee of Rothamsted Research then access to data held in e-RA is subject to our Data 
+						Access Policy. To register please
+						contact the <a href="mailto:era@rothamsted.ac.uk">e-RA Curator</a> otherwise you can continue browsing dataset
+						fields and previewing their contents -- to decide whether registration would be useful.
+						</td>
+						<td>&nbsp;&nbsp;</td>
+					</tr>
+					</table>
+					<br><br>
+					<b>Registered users</b>&nbsp;&nbsp;If this is the first time you have used the new eRA system 
+					then you must contact the eRA Data Curator to set up a new password so that you can continue 
+					to access the datasets. We have copied all usernames and their dataset access details onto 
+					the new system but the Oracle passwords cannot be copied.
+					<br><br><br>
+					<table>
+						<!--<caption style="font-weight: bold">You can specify a sort order for your output here.</caption>-->
+						<tr>
+							<th colspan="3">Specify a sort order for your output rows here.</th>
+							<th colspan="3">Otherwise the Dataset</th>
+						</tr>
+						<tr>
+							<th>Your fields</th>
+							<th>&nbsp;</th>
+							<th>Your sort order</th>
+							<th colspan="3">Index order is used</th>
+						</tr>
+						<tr>
+							<td>
+								<select id="sort_field_options" name="sel1" size="10"
+											multiple="multiple" style="width: 140px">
+								<!--<option value="1">Left1</option>
+								<option value="2">Left2</option>
+								<option value="3">Left3</option>
+								<option value="4">Left4</option>
+								<option value="5">Left5</option>-->
+								</select>
+							</td>
+							<td align="center" valign="middle">
+								<input id="add_sort_field_button" type="button" value="  --&gt;  "
+																	title="add field"><br>&nbsp;<br>
+								<input id="remove_sort_field_button" type="button" value="  &lt;--  "
+																	title="remove field"><br>&nbsp;<br>
+							</td>
+							<td>
+								<select id="sort_field_order" name="sel2" size="10"
+											multiple="multiple" style="width: 140px">
+								<!--<option value="1">Right1</option>
+								<option value="2">Right2</option>
+								<option value="3">Right3</option>
+								<option value="4">Right4</option>
+								<option value="5">Right5</option>-->
+								</select>
+							</td>
+							<td>&nbsp;</td>
+							<td>
+								<select id="default_sort_order" size="10" 
+												style="width: 140px" disabled>
+								<!--<option value="1">Right1</option>
+								<option value="2">Right2</option>
+								<option value="3">Right3</option>
+								<option value="4">Right4</option>
+								<option value="5">Right5</option>-->
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td><span style="visibility: hidden">MMMMMM</span></td>
+							<td>&nbsp;</td>
+							<td><span style="visibility: hidden">MMMMMM</span></td>
+							<td>&nbsp;</td>
+							<td><span style="visibility: hidden">MMMMMM</span></td>
+						</tr>
+					</table>
+				</div>
+
+				<!--<div id="datafilter_hidden_values_section">-->
+				<div id="datafilter_hidden_values_section" class="hidden">
+					<!--<input type="text" value="A">
+					<input type="text" value="B">
+					<input type="text" value="C">-->
+				</div>
+
+				<!--<div id="sortorder_hidden_values_section">-->
+				<div id="sortorder_hidden_values_section" class="hidden">
+					<!--<input type="text" value="D">
+					<input type="text" value="E">
+					<input type="text" value="F">-->
+				</div>
+
+				<input id="datafield_listing_dataset" type="hidden" name="dataset" value="">
+
+				<!--<input id="fred" name="user" value="fred">-->
+
+				</form>
+			</div>
+
+			<div id="clear">
+
+			</div>
+
+			<div id="clonables_container">
+
+				<table border="0">
+				<tr id="dataset_listing_empty_row">
+					<td><input type="checkbox" disabled></td>
+					<td align="center">None</td>
+					<td align="center">...</td>
+					<td align="center">...</td>
+				</tr>
+				<tr id="dataset_listing_clonable_row">
+					<td><input type="checkbox"></td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr id="dataset_listing_clonable_group_title_row"
+						name="title_row" class="title_row">
+					<td class="merge">&nbsp;</td>
+					<!--<td class="title" colspan="3"><img src="../images/web_link.png">&nbsp;</td>-->
+					<!--<td class="title" colspan="3"><img src="../images/web_link.png" onclick="javascript:expt();">&nbsp;</td>-->
+							<td class="title" colspan="3"><a class="dataset_group_link"
+
+
+													>&nbsp;</a></td>
+				</tr>
+				</table>
+
+				<table>
+				<tr id="datafield_listing_empty_row">
+					<td><input type="checkbox" disabled></td>
+					<td><input type="checkbox" disabled></td>
+					<td align="center">None&nbsp;</td>
+					<td align="center">...</td>
+					<td align="center" class="merge"><img src="../images/blank.png"></td>
+					<td align="center">...</td>
+				</tr>
+				<tr id="datafield_listing_clonable_row">
+					<td><input type="checkbox" name="datafield[]"></td>
+					<td><input type="checkbox" name="datafilter[]"></td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td class="merge"><img class="show_all" src="../images/blank.png"></td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr id="datafield_listing_clonable_extension_row">
+					<td class="merge">&nbsp;</td>
+					<td class="merge">&nbsp;</td>
+					<td class="merge">&nbsp;</td>
+					<td class="merge" align="right">&nbsp;</td>
+					<td colspan="2" class="merge2">&nbsp;</td>
+				</tr>
+				<tr id="datafield_listing_clonable_group_title_row"
+						name="title_row" class="title_row">
+					<td class="merge">&nbsp;</td>
+					<td class="merge">&nbsp;</td>
+					<td class="title" colspan="4">&nbsp;...</td>
+				</tr>
+				</table>
+
+				<table>
+				<tr id="datafilter_listing_empty_row">
+					<td align="center">
+					<input type="button" value="set" disabled 
+							style="width: 40px; height: 22px; font: 12px Arial">
+					</td>
+					<td align="center">None&nbsp;&nbsp;</td>
+					<td>&nbsp;</td>
+					<td><input type="button" value=" clear " disabled></td>
+					<td><input type="button" value=" remove " disabled></td>
+				</tr>
+				<tr id="datafilter_listing_clonable_row">
+					<td align="center">
+					<input type="button" value="set" 
+							style="width: 40px; height: 20px; font: 12px Arial">
+					</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td><input type="button" value=" clear " onclick="suggested()"></td>
+					<td><input type="button" value=" remove " onclick="suggested()"></td>
+				</tr>
+				</table>
+
+				<select>
+					<option id="datafilter_select_clonable_option">&nbsp;</option>
+				</select>
+
+				<select>
+					<option id="sortorder_select_clonable_option" value="sort">&nbsp;</option>
+				</select>
+
+				<!--<input id="datafilter_clonable_hidden_value">-->
+				<input id="datafilter_clonable_hidden_value" type="hidden">
+
+				<!--<input id="sortorder_clonable_hidden_value">-->
+				<input id="sortorder_clonable_hidden_value" type="hidden">
+
+			</div>
+
+		</div>
+
+		<!--<div>
+			<img src="../images/bonep.png" style="height: 1px; width: 960px;">
+		</div>-->
+
+	<!--</div>-->
+
+	<input id="userid" type="hidden" name="username" value="moore">
+
+</div>
+
+<!--<div id="log_panel" class="hidden"><b>Message log:</b><br></div>-->
+<div id="log_panel"><b>Message log:</b><br></div>
+
+</body>
+</html>
+
+
+<!-- -+- -->
+
+
